@@ -1,98 +1,42 @@
 import React, { useState } from "react";
-
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
-import {
-  TextField,
-  Button,
-  Container,
-  Typography,
-  Avatar,
-  IconButton,
-  Box,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import "react-toastify/dist/ReactToastify.css";
+import { CgEyeAlt } from "react-icons/cg";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { AddUserFormData } from "../models/models";
 
-// Define the interface for your form data
-interface AddUserFormData {
-  name: string;
-  username: string;
-  email?: string;
-  phone?: string;
-  avatar?: File;
-  password: string;
-  confirmPassword: string;
-}
 
 const AddUserForm: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(true);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-
+  const handleGeneratePassword = () => {
+    const length = 8;
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789*!@#$%^&()";
+    let generatePassword = "";
+    for (let i = 0, n = charset.length; i < length; ++i) {
+      generatePassword += charset.charAt(Math.floor(Math.random() * n));
+    }
+    setPassword(generatePassword);
+    console.log(password);
+  };
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<AddUserFormData>(); // Type form data here
+  } = useForm<AddUserFormData>();
 
-  // Explicitly type the onSubmit handler
   const onSubmit: SubmitHandler<AddUserFormData> = (data) => {
-    const { name, username, email, phone, avatar, password, confirmPassword } =
-      data;
-
-    // Validation checks
-    if (!name || name.length > 255 || !/^[A-Za-z\s]+$/.test(name)) {
-      toast.error(
-        "Name is required and should contain only alphabets and spaces."
-      );
-      return;
-    }
-
-    if (
-      !username ||
-      username.length > 255 ||
-      !/^[A-Za-z0-9\s]+$/.test(username)
-    ) {
-      toast.error(
-        "Username is required and should contain only letters, numbers, and spaces."
-      );
-      return;
-    }
-
-    if (email && email.length > 255 && !/^\S+@\S+\.\S+$/.test(email)) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-
-    if (phone && phone.length > 255 && !/^\d+$/.test(phone)) {
-      toast.error("Please enter a valid phone number.");
-      return;
-    }
-
-    if (avatar && avatar.size > 5120 * 1024) {
-      toast.error("Avatar image size must be less than 5MB.");
-      return;
-    }
-
-    if (!password || password.length < 8) {
-      toast.error(
-        "Password is required and must be at least 8 characters long."
-      );
-      return;
-    }
-
-    if (password !== confirmPassword) {
+    if (data.password !== data.confirmPassword) {
       toast.error("Passwords must match.");
       return;
     }
-
-    // If all validation passes, log data and show success toast
-    console.log("User Data:", data);
     toast.success("User Added Successfully!");
+    console.log("User Data:", data);
   };
-  console.log(errors.name?.message);
 
-  // Handle Avatar Upload Preview
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -102,122 +46,110 @@ const AddUserForm: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" textAlign="center" mb={3}>
-        Add User
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box>
-          <div>
-            {/* Name */}
-            <div className="mb-4">
-              <TextField
-                fullWidth
-                label="Name"
-                {...register("name")}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-              />
-            </div>
-
-            {/* Username */}
-            <div>
-              <TextField
-                fullWidth
-                label="Username"
-                {...register("username")}
-                error={!!errors.username}
-                helperText={errors.username?.message}
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <TextField
-                fullWidth
-                label="Email"
-                {...register("email")}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
-            </div>
-
-            {/* Phone */}
-            <div>
-              <TextField
-                fullWidth
-                label="Phone"
-                {...register("phone")}
-                error={!!errors.phone}
-                helperText={errors.phone?.message}
-              />
-            </div>
-
-            {/* Avatar Upload */}
-            <div >
-              {avatarPreview && (
-                <Avatar
-                  src={avatarPreview}
-                  sx={{ width: 100, height: 100, margin: "auto" }}
-                />
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-              />
-              {errors.avatar && (
-                <Typography color="error">{errors.avatar.message}</Typography>
-              )}
-            </div>
-
-            {/* Password */}
-            <div>
-              <TextField
-                fullWidth
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                {...register("password")}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  ),
-                }}
-              />
-            </div>
-
-            {/* Confirm Password */}
-            <div>
-              <TextField
-                fullWidth
-                label="Confirm Password"
-                type={showPassword ? "text" : "password"}
-                {...register("confirmPassword")}
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword?.message}
-              />
-            </div>
-
-            {/* Submit Button */}
-            <div>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Add User
-              </Button>
-            </div>
+    <div className="flex items-center justify-center">
+      <div className="bg-white p-8 shadow-lg rounded-lg w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center">Add User</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <input
+              type="text"
+              {...register("name", { required: "Name is required" })}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Full Name"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
           </div>
-        </Box>
-      </form>
-      <ToastContainer autoClose={3000} />
-    </Container>
+
+          <div className="mb-4">
+            <input
+              type="text"
+              {...register("username", { required: "Username is required" })}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Username"
+            />
+            {errors.username && (
+              <p className="text-red-500 text-sm">{errors.username.message}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <input
+              type="email"
+              {...register("email")}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Email (Optional)"
+            />
+          </div>
+
+          <div className="mb-4">
+            <input
+              type="tel"
+              {...register("phone")}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Phone (Optional)"
+            />
+          </div>
+
+          <div className="mb-4">
+            {avatarPreview && (
+              <img
+                src={avatarPreview}
+                alt="Avatar Preview"
+                className="w-20 h-20 mx-auto mb-2 rounded-full"
+              />
+            )}
+            <input type="file" accept="image/*" onChange={handleAvatarChange} />
+          </div>
+
+          <div className="mb-4 relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: 8,
+
+              })}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Password"
+            />
+            <button
+              type="button"
+              className="absolute top-2 right-3 text-xl cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <CgEyeAlt /> : <RiEyeCloseLine />}
+            </button>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: "Confirm Password is required",
+              })}
+              className="block px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm Password"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          >
+            Add User
+          </button>
+          <div>
+            <button onClick={handleGeneratePassword}>Generate PassWord</button>
+          </div>
+        </form>
+        <ToastContainer autoClose={3000} />
+      </div>
+    </div>
   );
 };
 

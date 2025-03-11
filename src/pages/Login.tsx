@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { VscEyeClosed } from "react-icons/vsc";
+import { CgEyeAlt } from "react-icons/cg";
 import { RiEyeCloseLine } from "react-icons/ri";
 import Decorative_Image from "../assets/login_decor.png";
 import Login_Logo from "../assets/login_logo.png";
 import { toast, ToastContainer } from "react-toastify";
-import { TextField } from "@mui/material";
 
 const Login: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -38,40 +37,39 @@ const Login: React.FC = () => {
           </div>
           <h2 className="text-3xl font-bold mb-6 mt-8">ログイン</h2>
           <form onSubmit={handleSubmit}>
-            {/* Username Field */}
-            <TextField
-              required
-              label="ID"
-              variant="outlined"
-              placeholder="ID"
-              fullWidth
-              margin="normal"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className="mt-1 w-full p-2 border rounded-md text-[#32479C] focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {/* Password Field */}
-            <div className="relative">
-              <TextField
-                required
-                label="パスワード"
-                type={isPasswordVisible ? "password" : "text"}
-                variant="outlined"
-                placeholder="パスワード"
-                fullWidth
-                margin="normal"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 w-full p-2 border rounded-md text-[#32479C] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <div className="mb-4 relative">
+              {/* Username Field */}
+              <input
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] appearance-none dark:text-white dark:border-[#32479C] dark:focus:border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                placeholder="ID"
               />
+              <label className="absolute text-base text-[#32479C] font-bold dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#32479C] peer-focus:dark:text-[#32479C] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                ID
+              </label>
+            </div>
+            <div className="relative">
+              {/* Password Field */}
+              <input
+                type={isPasswordVisible ? "password" : "text"}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] appearance-none dark:text-white dark:border-[#32479C] dark:focus:border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                placeholder="Password"
+              />
+              <label className="absolute text-base text-[#32479C] font-bold dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#32479C] peer-focus:dark:text-[#32479C] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                Password
+              </label>
               {password.length > 0 && (
                 <button
                   type="button"
                   title={isPasswordVisible ? "See password" : "Hide password"}
-                  className="absolute top-9 right-3 cursor-pointer"
+                  className="absolute top-4 right-3 cursor-pointer text-xl"
                   onClick={() => setIsPasswordVisible((e) => !e)}
                 >
-                  {isPasswordVisible ? <RiEyeCloseLine /> : <VscEyeClosed />}
+                  {isPasswordVisible ? <CgEyeAlt />  : <RiEyeCloseLine />}
                 </button>
               )}
             </div>

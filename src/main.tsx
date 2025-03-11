@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import AddUser from "./pages/AddUser";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,5 +31,8 @@ const router = createBrowserRouter([
   },
 ]);
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />
+
+    <RouterProvider router={router} />
+
+
 );
