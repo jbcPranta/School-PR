@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
                 src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                 alt="Your Company"
               />
-              <div className="text-white font-bold">帝京安積高等学校</div>
+              <div className="text-white font-bold text-2xl">帝京安積高等学校</div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

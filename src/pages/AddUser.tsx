@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import { CgEyeAlt } from "react-icons/cg";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { AddUserFormData } from "../models/models";
@@ -147,7 +146,7 @@ const AddUserForm: React.FC = () => {
             <button onClick={handleGeneratePassword}>Generate PassWord</button>
           </div>
         </form>
-        <ToastContainer autoClose={3000} />
+        <Toaster position="top-right" reverseOrder={false} />
       </div>
     </div>
   );

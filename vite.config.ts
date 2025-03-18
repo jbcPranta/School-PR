@@ -12,7 +12,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src"), 
+      "react-toastify": "react-toastify/dist/react-toastify.esm.js",
     },
   },
 });

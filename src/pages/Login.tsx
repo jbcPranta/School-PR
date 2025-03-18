@@ -3,7 +3,8 @@ import { CgEyeAlt } from "react-icons/cg";
 import { RiEyeCloseLine } from "react-icons/ri";
 import Decorative_Image from "../assets/login_decor.png";
 import Login_Logo from "../assets/login_logo.png";
-import { toast, ToastContainer } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
+
 
 const Login: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -82,7 +83,7 @@ const Login: React.FC = () => {
                 学校にお問い合わせをお願いいたします
               </p>
             </div>
-            <ToastContainer autoClose={3000} />
+            <Toaster toastOptions={{ duration: 3000 }} />
             <button
               type="submit"
               className="w-full bg-white border-1 border-[#32479C] text-[#32479C] font-bold py-2 px-4 rounded-md hover:bg-gray-300 cursor-pointer"
