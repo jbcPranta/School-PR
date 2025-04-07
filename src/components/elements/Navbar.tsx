@@ -1,12 +1,14 @@
 import React from "react";
 import { FaBell } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
     <nav className="bg-[#32479c]">
       <div className="mx-auto px-4">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="flex flex-1 items-center justify-start ">
+        
+          <Link to={"/"} className="flex flex-1 items-center justify-start ">
             <div className="flex gap-4 shrink-0 items-center">
               <img
                 className="h-8 w-auto"
@@ -15,7 +17,7 @@ const Navbar: React.FC = () => {
               />
               <div className="text-white font-bold text-2xl">帝京安積高等学校</div>
             </div>
-          </div>
+          </Link>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
@@ -23,6 +25,7 @@ const Navbar: React.FC = () => {
             >
               <FaBell />
               <span>お知らせ</span>
+              
             </button>
           </div>
         </div>

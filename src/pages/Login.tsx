@@ -1,27 +1,44 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CgEyeAlt } from "react-icons/cg";
 import { RiEyeCloseLine } from "react-icons/ri";
 import Decorative_Image from "../assets/login_decor.png";
 import Login_Logo from "../assets/login_logo.png";
 import toast, { Toaster } from "react-hot-toast";
 
-
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-  const [userName, setUserName] = useState("");
+  const [userEmail, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!userName || !password) {
-      toast("Enter User name and Password");
-    }
-    if (password.length < 8) {
-      toast.error("Password must be contain 8 character");
+  
+    if (!userEmail || !password) {
+      toast.error("Enter User name and Password");
       return;
     }
-    toast.success("Login Success");
-    console.log(`Login Data: ${userName} , ${password}`);
+  
+    if (!isValidEmail(userEmail)) {
+      toast.error("Invalid Email");
+      return;
+    }
+  
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+  
+    setTimeout(() => {
+      toast.success("Login Success");
+      navigate("/");
+    });
+  
+    console.log(`User Email: ${userEmail}, Password: ${password}`);
   };
 
   return (
@@ -38,29 +55,32 @@ const Login: React.FC = () => {
           </div>
           <h2 className="text-3xl font-bold mb-6 mt-8">ログイン</h2>
           <form onSubmit={handleSubmit}>
+            {/* Username Field */}
             <div className="mb-4 relative">
-              {/* Username Field */}
               <input
-                type="text"
-                value={userName}
+                type="email"
+                value={userEmail}
                 onChange={(e) => setUserName(e.target.value)}
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] appearance-none dark:text-white dark:border-[#32479C] dark:focus:border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
-                placeholder="ID"
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                placeholder="Email"
+                required
               />
-              <label className="absolute text-base text-[#32479C] font-bold dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#32479C] peer-focus:dark:text-[#32479C] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
-                ID
+              <label className="absolute text-base text-[#32479C] font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
+                Email
               </label>
             </div>
+
+            {/* Password Field */}
             <div className="relative">
-              {/* Password Field */}
               <input
                 type={isPasswordVisible ? "password" : "text"}
-                onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] appearance-none dark:text-white dark:border-[#32479C] dark:focus:border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                onChange={(e) => setPassword(e.target.value)}
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
                 placeholder="Password"
+                required
               />
-              <label className="absolute text-base text-[#32479C] font-bold dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#32479C] peer-focus:dark:text-[#32479C] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+              <label className="absolute text-base text-[#32479C] font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
                 Password
               </label>
               {password.length > 0 && (
@@ -70,10 +90,12 @@ const Login: React.FC = () => {
                   className="absolute top-4 right-3 cursor-pointer text-xl"
                   onClick={() => setIsPasswordVisible((e) => !e)}
                 >
-                  {isPasswordVisible ? <CgEyeAlt />  : <RiEyeCloseLine />}
+                  {isPasswordVisible ? <CgEyeAlt /> : <RiEyeCloseLine />}
                 </button>
               )}
             </div>
+
+            {/* Instructions */}
             <div className="text-center py-5">
               <p>
                 アカウント情報を忘れた場合は
@@ -83,16 +105,23 @@ const Login: React.FC = () => {
                 学校にお問い合わせをお願いいたします
               </p>
             </div>
+
             <Toaster toastOptions={{ duration: 3000 }} />
+
+            {/* Login Button */}
             <button
               type="submit"
               className="w-full bg-white border-1 border-[#32479C] text-[#32479C] font-bold py-2 px-4 rounded-md hover:bg-gray-300 cursor-pointer"
             >
               ログイン
             </button>
+
+            {/* OR Text */}
             <div className="mt-4 text-center">
               <span className="text-sm text-[#32479C] font-bold">OR</span>
             </div>
+
+            {/* Alternative Login */}
             <button
               type="button"
               className="w-full mt-2 bg-[#32479C] text-white py-2 px-4 rounded-md font-bold cursor-pointer"

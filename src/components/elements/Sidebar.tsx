@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-64 bg-[#32479C] shadow-2xl border-t-2 border-amber-50 flex text-amber-50">
+    <div className="h-screen h-100vh w-64 bg-[#32479C] shadow-2xl border-t-2 border-amber-50 flex text-amber-50">
       <nav className="flex-1">
         <ul className="cursor-pointer">
           {/* Event Management */}
