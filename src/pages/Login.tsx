@@ -5,42 +5,33 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import Decorative_Image from "../assets/login_decor.png";
 import Login_Logo from "../assets/login_logo.png";
 import toast, { Toaster } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const Login: React.FC = () => {
+  const { register, handleSubmit, formState } = useForm<FormValues>({
+    defaultValues: {
+      email: "", 
+    },
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+  const { errors } = formState;
+
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-  const [userEmail, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-  
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-  
-    if (!userEmail || !password) {
-      toast.error("Enter User name and Password");
-      return;
-    }
-  
-    if (!isValidEmail(userEmail)) {
-      toast.error("Invalid Email");
-      return;
-    }
-  
-    if (password.length < 8) {
-      toast.error("Password must be at least 8 characters");
-      return;
-    }
-  
-    setTimeout(() => {
-      toast.success("Login Success");
-      navigate("/");
-    });
-  
-    console.log(`User Email: ${userEmail}, Password: ${password}`);
-  };
 
+  const onSubmit = (data: FormValues) => {
+    toast.success("Login Success");
+    console.log(data);
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
   return (
     <div className="bg-gray-100">
       <div className="w-[978px] mx-auto flex justify-between items-center min-h-screen">
@@ -54,35 +45,57 @@ const Login: React.FC = () => {
             <img src={Decorative_Image} alt="Decorative Image" />
           </div>
           <h2 className="text-3xl font-bold mb-6 mt-8">ログイン</h2>
-          <form onSubmit={handleSubmit}>
-            {/* Username Field */}
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            {/* Email Field */}
             <div className="mb-4 relative">
               <input
                 type="email"
-                value={userEmail}
-                onChange={(e) => setUserName(e.target.value)}
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                id="email"
                 placeholder="Email"
-                required
+                className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1  ${errors.email ? "border-red-500 focus:outline-none focus:ring-0 focus:border-[#32479C] " : "border-[#32479C] "} `}
+                
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
               />
-              <label className="absolute text-base text-[#32479C] font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
+              <label
+                className={`absolute text-base ${errors.email ? "text-red-500" : "text-[#32479C]"} font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4`}
+              >
                 Email
               </label>
+              <p className="p-2 text-sm text-red-500 font-semibold">
+                {errors.email?.message}
+              </p>
             </div>
 
             {/* Password Field */}
             <div className="relative">
               <input
                 type={isPasswordVisible ? "password" : "text"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-[#32479C] focus:outline-none focus:ring-0 focus:border-[#32479C] peer"
+                id="password"
+                className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1  ${errors.password ? "border-red-500 focus:outline-none focus:ring-0 focus:border-[#32479C] " : "border-[#32479C] "} `}
                 placeholder="Password"
-                required
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  onChange: (e) => setPassword(e.target.value),
+                })}
               />
-              <label className="absolute text-base text-[#32479C] font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4">
+              <label
+                className={`absolute text-base ${errors.password ? "text-red-500" : "text-[#32479C]"} font-bold duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4`}
+              >
                 Password
               </label>
+              <p className="p-2 text-sm text-red-500 font-semibold">
+                {errors.password?.message}
+              </p>
               {password.length > 0 && (
                 <button
                   type="button"
@@ -95,7 +108,6 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Instructions */}
             <div className="text-center py-5">
               <p>
                 アカウント情報を忘れた場合は
@@ -106,7 +118,11 @@ const Login: React.FC = () => {
               </p>
             </div>
 
-            <Toaster toastOptions={{ duration: 3000 }} />
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              toastOptions={{ duration: 3000 }}
+            />
 
             {/* Login Button */}
             <button

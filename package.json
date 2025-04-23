@@ -23,6 +23,7 @@
     "clsx": "^2.1.1",
     "flowbite": "^3.1.2",
     "font-awesome": "^4.7.0",
+    "laravel-precognition-react": "^0.7.2",
     "lucide-react": "^0.477.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

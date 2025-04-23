@@ -13,11 +13,18 @@ import StudentList from "./pages/StudentList";
 import ExpenseItemList from "./pages/student-managment/ExpenseItemList";
 import ClassList from "./pages/student-managment/ClassList";
 import ClubList from "./pages/student-managment/ClubList";
+import Dashboard from "./components/Dashboard";
+import ChangePassword from "./pages/ChangePassword";
 const router = createBrowserRouter([
   {
-    path: "/",
+    
+    path: "",
     element: <Home />,
     children: [
+      {
+        path: "/",
+        element: <Dashboard />,
+      },
       {
         path: "/event-list",
         element: <EventManagement />,
@@ -58,6 +65,10 @@ const router = createBrowserRouter([
         path: "/expense-item-list",
         element: <ExpenseItemList />,
       },
+      {
+        path: "/change-password",
+        element: <ChangePassword />,
+      },
     ],
   },
   {
@@ -66,5 +77,5 @@ const router = createBrowserRouter([
   },
 ]);
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />
+  <RouterProvider  router={router} />
 );

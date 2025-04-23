@@ -6,11 +6,9 @@ import { Outlet } from "react-router-dom";
 
 const Home: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  console.log(showSidebar);
 
   return (
     <div className="h-screen flex flex-col">
-      {/* Navbar */}
       <div className="flex items-center bg-[#32479C] h-16">
         <button
           onClick={() => setShowSidebar(!showSidebar)}
@@ -39,13 +37,11 @@ const Home: React.FC = () => {
 
         {/* Content (Takes Remaining Space) */}
         <div
-          className={`bg-[#EDEDED] p-10 overflow-y-auto h-screen transition-all duration-300 flex-1 ${
-            showSidebar ? "ml-64 md:ml-0" : "ml-0"
-          }`}
-        >
+          className={`bg-[#EDEDED] p-10 overflow-y-auto h-screen transition-all duration-300 flex-1 ${showSidebar ? "ml-64 md:ml-0" : "ml-0"}`}>
           <Outlet />
         </div>
       </div>
+      
     </div>
   );
 };
