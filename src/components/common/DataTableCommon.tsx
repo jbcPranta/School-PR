@@ -11,7 +11,7 @@ type User = {
 
 const DataTableCommon: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(0);
-  const page = 5; // Adjust the page numbers the way you want
+  const page = 1; // Adjust the page numbers the way you want
   const updatePageNumber = (num: number) => {
     if (num > page - 1 || 0 > num) {
       return setPageNumber(0);
@@ -117,13 +117,13 @@ const DataTableCommon: React.FC = () => {
         </table>
       </div>
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-3 p-2 w-fit select-none">
+      <div className="flex justify-center items-center gap-3 py-4 w-fit select-none">
         {/* left arrow */}
         <div
           onClick={() => {
             updatePageNumber(pageNumber - 1);
           }}
-          className=" hover:scale-110 scale-100 transition-all duration-200 cursor-pointer bg-sky-100 px-1 py-1 rounded-md"
+          className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
         >
           <svg
             className="w-8"
@@ -141,7 +141,7 @@ const DataTableCommon: React.FC = () => {
               {" "}
               <path
                 d="M15 7L10 12L15 17"
-                stroke="#0284C7"
+                stroke="#d3d3d3"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -167,7 +167,7 @@ const DataTableCommon: React.FC = () => {
           onClick={() => {
             updatePageNumber(pageNumber + 1);
           }}
-          className=" hover:scale-110 scale-100 transition-all duration-200 cursor-pointer bg-sky-100 px-1 py-1 rounded-md"
+          className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
         >
           <svg
             className="w-7"
@@ -185,7 +185,7 @@ const DataTableCommon: React.FC = () => {
               {" "}
               <path
                 d="M10 7L15 12L10 17"
-                stroke="#0284C7"
+                stroke="#d3d3d3"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
