@@ -58,7 +58,7 @@ const DataTableCommon: React.FC = () => {
         </Link>
         <h2 className="uppercase text-2xl font-bold">Admin table</h2>
 
-        <div className="relative">
+        <div className="relative w-[30%]">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 dark:text-gray-400"
