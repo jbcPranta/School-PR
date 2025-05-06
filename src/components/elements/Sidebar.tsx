@@ -22,7 +22,16 @@ const Sidebar: React.FC = () => {
     <div className="h-screen h-100vh w-64 bg-[#32479C] shadow-2xl border-t-2 border-amber-50 flex text-amber-50">
       <nav className="flex-1">
         <ul className="cursor-pointer">
+          {/* Admin List */}
+          <Link
+            to="/admin-page"
+            className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
+          >
+            <FaHeadSideVirus className="text-amber-50 text-2xl" />
+            <div className="p-3 font-bold text-base">Admin List</div>
+          </Link>
           {/* Event Management */}
+          
           <Link
             to="/event-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"

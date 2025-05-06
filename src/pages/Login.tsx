@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const { errors } = formState;
+  const { errors, isValid } = formState;
 
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -71,6 +71,7 @@ const Login: React.FC = () => {
                 {errors.email?.message}
               </p>
             </div>
+            
 
             {/* Password Field */}
             <div className="relative">
@@ -127,7 +128,9 @@ const Login: React.FC = () => {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-white border-1 border-[#32479C] text-[#32479C] font-bold py-2 px-4 rounded-md hover:bg-gray-300 cursor-pointer"
+              disabled={!isValid}
+              className={`w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-300 ${!isValid ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              // className="w-full bg-white border-1 border-[#32479C] text-[#32479C] font-bold py-2 px-4 rounded-md hover:bg-gray-300 cursor-pointer"
             >
               ログイン
             </button>

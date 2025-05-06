@@ -15,6 +15,8 @@ import ClassList from "./pages/student-managment/ClassList";
 import ClubList from "./pages/student-managment/ClubList";
 import Dashboard from "./components/Dashboard";
 import ChangePassword from "./pages/ChangePassword";
+import CommonForm from "./components/common/CommonForm";
+import AdminPage from "./pages/AdminPage";
 const router = createBrowserRouter([
   {
     
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/event-list",
         element: <EventManagement />,
+      },
+      {
+        path: "/admin-page",
+        element: <AdminPage/>,
       },
       {
         path: "/announcement-list",
@@ -68,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/change-password",
         element: <ChangePassword />,
+      },
+      {
+        path: "/create-user",
+        element: <CommonForm />,
       },
     ],
   },
