@@ -6,14 +6,6 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import withMT from "@material-tailwind/react/utils/withMT";
-module.exports = withMT({
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-});
 
 // https://vite.dev/config/
 export default defineConfig({
