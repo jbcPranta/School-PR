@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 type User = {
@@ -17,6 +18,10 @@ const DataTableCommon: React.FC = () => {
       return setPageNumber(0);
     }
     setPageNumber(num);
+  };
+  const [dropdown, setDropdown] = useState(false);
+  const handleDropdown = () => {
+    setDropdown((prev) => !prev);
   };
   const users: User[] = [
     {
@@ -51,8 +56,9 @@ const DataTableCommon: React.FC = () => {
             Create User
           </button>
         </Link>
+        <h2 className="uppercase text-2xl font-bold">Admin table</h2>
 
-        <div className="relative w-1/2">
+        <div className="relative">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -116,82 +122,111 @@ const DataTableCommon: React.FC = () => {
           </tbody>
         </table>
       </div>
-      {/* Pagination */}
-      <div className="flex justify-center items-center gap-3 py-4 w-fit select-none">
-        {/* left arrow */}
-        <div
-          onClick={() => {
-            updatePageNumber(pageNumber - 1);
-          }}
-          className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
-        >
-          <svg
-            className="w-8"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" strokeWidth={0} />
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <g id="SVGRepo_iconCarrier">
-              {" "}
-              <path
-                d="M15 7L10 12L15 17"
-                stroke="#d3d3d3"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />{" "}
-            </g>
-          </svg>
-        </div>
-        <div className="flex justify-center items-center gap-2 ">
-          {[...Array(page).keys()].map((item) => (
+      <div className="flex items-center justify-between gap-5">
+        {/* Dropdown Toggle + Menu */}
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className=" uppercase font-bold">Items:</h2>
             <div
-              onClick={() => {
-                setPageNumber(item);
-              }}
-              className={`cursor-pointer hover:scale-110 text-sm scale-100 transition-all duration-200 px-3 ${pageNumber === item ? "bg-sky-500 text-white" : "bg-white"} border-sky-300  font-semibold text-gray-700   py-[6px] rounded-md`}
-              key={item}
+              onClick={handleDropdown}
+              className="border-b relative rounded-md flex border-amber-50 px-4 py-2 bg-sky-50 items-center  cursor-pointer"
             >
-              {item + 1}
+              <h3 className="font-bold text-base w-[80%] text-start">5</h3>
+              {dropdown ? (
+                <IoMdArrowDropdown className="text-black-100 text-2xl" />
+              ) : (
+                <IoMdArrowDropright className="text-black-100 text-2xl" />
+              )}
             </div>
-          ))}
+          </div>
+
+          {/* Dropdown menu: absolute and below the toggle */}
+          {dropdown && (
+            <div className="absolute left-15 mt-1 bg-sky-50  text-black px-6 py-2 rounded shadow z-10">
+              <h1 className="cursor-pointer py-2 hover:text-sky-500 rounded-md">
+                10
+              </h1>
+            </div>
+          )}
         </div>
-        {/* right arrow */}
-        <div
-          onClick={() => {
-            updatePageNumber(pageNumber + 1);
-          }}
-          className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
-        >
-          <svg
-            className="w-7"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+
+        {/* Pagination */}
+        <div className="flex justify-center items-center gap-3 py-4 w-fit select-none">
+          {/* left arrow */}
+          <div
+            onClick={() => {
+              updatePageNumber(pageNumber - 1);
+            }}
+            className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
           >
-            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              {" "}
-              <path
-                d="M10 7L15 12L10 17"
-                stroke="#d3d3d3"
-                strokeWidth="1.5"
+            <svg
+              className="w-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+              <g
+                id="SVGRepo_tracerCarrier"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-              ></path>{" "}
-            </g>
-          </svg>
+              />
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M15 7L10 12L15 17"
+                  stroke="#d3d3d3"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />{" "}
+              </g>
+            </svg>
+          </div>
+          <div className="flex justify-center items-center gap-2 ">
+            {[...Array(page).keys()].map((item) => (
+              <div
+                onClick={() => {
+                  setPageNumber(item);
+                }}
+                className={`cursor-pointer hover:scale-110 text-sm scale-100 transition-all duration-200 px-3 ${pageNumber === item ? "bg-sky-500 text-white" : "bg-white"} border-sky-300  font-semibold text-gray-700   py-[6px] rounded-md`}
+                key={item}
+              >
+                {item + 1}
+              </div>
+            ))}
+          </div>
+          {/* right arrow */}
+          <div
+            onClick={() => {
+              updatePageNumber(pageNumber + 1);
+            }}
+            className=" hover:scale-110 scale-100 transition-all duration-200 bg-sky-50 px-1 py-1 rounded-md cursor-not-allowed"
+          >
+            <svg
+              className="w-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M10 7L15 12L10 17"
+                  stroke="#d3d3d3"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>{" "}
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
