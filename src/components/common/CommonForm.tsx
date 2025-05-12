@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   role: string;
@@ -15,11 +16,11 @@ const CommonForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onChange",
   });
+  const navigate = useNavigate();
 
   const onSubmit = (data: FormData) => {
     toast.success("Login Success");
@@ -163,7 +164,7 @@ const CommonForm: React.FC = () => {
           <button
             type="button"
             className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-md cursor-pointer"
-            onClick={() => reset()}
+            onClick={() => navigate(-1)} // Go back to the previous page
           >
             Cancel
           </button>

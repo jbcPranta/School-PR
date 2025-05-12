@@ -6,11 +6,20 @@ type User = {
   name: string;
   furigana_Name: string;
   role: string;
-  mailAddress: string;
+  emailAddress: string;
   phoneNumber: string;
 };
 
-const DataTableCommon: React.FC = () => {
+type TableHead = {
+  text: string;
+  key: keyof User;
+};
+const DataTableCommon: React.FC<{
+  tableHead: TableHead[];
+  data: User[];
+  headerTitle: string;
+  Actions: React.ReactNode[];
+}> = ({ tableHead, data, headerTitle, Actions }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const page = 1; // Adjust the page numbers the way you want
   const updatePageNumber = (num: number) => {
@@ -23,40 +32,17 @@ const DataTableCommon: React.FC = () => {
   const handleDropdown = () => {
     setDropdown((prev) => !prev);
   };
-  const users: User[] = [
-    {
-      role: "Admin",
-      name: "John Doe",
-      furigana_Name: "ジョン・ドウ",
-      phoneNumber: "123-456-7890",
-      mailAddress: "john@gmail.com",
-    },
-    {
-      role: "User",
-      name: "Jane Smith",
-      furigana_Name: "ジェーン・スミス",
-      phoneNumber: "098-765-4321",
-      mailAddress: "jane23@gmail.com",
-    },
-    {
-      role: "User",
-      name: "Jane Smith",
-      furigana_Name: "ジェーン・スミス",
-      phoneNumber: "098-765-4321",
-      mailAddress: "jane23@gmail.com",
-    },
-  ];
 
   return (
     <div className="relative">
       {/* Header section */}
       <div className="pb-4  dark:bg-gray-900 flex justify-between items-center">
         <Link to={`/create-user`}>
-          <button className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-md text-sm py-2.5 px-5 cursor-pointer">
+          <button className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-md text-sm py-2.5 px-5 cursor-pointer">
             Create User
           </button>
         </Link>
-        <h2 className="uppercase text-2xl font-bold">Admin table</h2>
+        <h2 className="uppercase text-2xl font-bold">{headerTitle}</h2>
 
         <div className="relative w-[30%]">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -69,9 +55,9 @@ const DataTableCommon: React.FC = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
             </svg>
@@ -97,26 +83,39 @@ const DataTableCommon: React.FC = () => {
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 cursor-pointer">
           <thead className="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-6 py-3">Name</th>
-              <th className="px-6 py-3">Furigana Name</th>
-              <th className="px-6 py-3">Role</th>
-              <th className="px-6 py-3">Mail address</th>
-              <th className="px-6 py-3">Phone Number</th>
+              {tableHead.map((item, index) => (
+                <th
+                  key={index}
+                  className="px-6 py-3 text-gray-700 dark:text-gray-400 font-bold"
+                >
+                  {item.text}
+                </th>
+              ))}
+              <th className="px-6 py-3 text-gray-700 dark:text-gray-400 font-bold text-center">
+                Actions
+              </th>
             </tr>
           </thead>
+
           <tbody>
-            {users.map((item, index) => (
+            {data.map((item, index) => (
               <tr
                 key={index}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.name}
+                {tableHead.map((head, index) => (
+                  <td
+                    key={index}
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {item[head.key as keyof User]}
+                  </td>
+                ))}
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 justify-around">
+                  {Actions.map((action, index) => (
+                    <div key={index}>{action}</div>
+                  ))}
                 </td>
-                <td className="px-6 py-4">{item.furigana_Name}</td>
-                <td className="px-6 py-4">{item.role}</td>
-                <td className="px-6 py-4">{item.mailAddress}</td>
-                <td className="px-6 py-4">{item.phoneNumber}</td>
               </tr>
             ))}
           </tbody>
