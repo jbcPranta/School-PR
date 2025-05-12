@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-type User = {
-  name: string;
-  furigana_Name: string;
-  role: string;
-  emailAddress: string;
-  phoneNumber: string;
+type StudentData = {
+  student_name: string;
+  student_name_furigana: string;
+  school_year: string;
+  class: string;
+  student_id_number: string;
+  club: string;
 };
 
 type TableHead = {
   text: string;
-  key: keyof User;
+  key: keyof StudentData;
 };
 const DataTableCommon: React.FC<{
   tableHead: TableHead[];
-  data: User[];
+  data: StudentData[];
   headerTitle: string;
   Actions: React.ReactNode[];
 }> = ({ tableHead, data, headerTitle, Actions }) => {
@@ -108,7 +109,7 @@ const DataTableCommon: React.FC<{
                     key={index}
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item[head.key as keyof User]}
+                    {item[head.key as keyof StudentData]}
                   </td>
                 ))}
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 justify-around">

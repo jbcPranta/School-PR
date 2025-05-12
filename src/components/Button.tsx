@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ url, label, type }) => {
     <Link to={url} title={label}>
       {type === "View" ? (
         <>
-          <FaEye className="text-black-600  hover:text-black-300 font-medium rounded-full text-2xl cursor-pointer flex items-center gap-2" />
+          <FaEye className="text-black-600  hover:text-gray-600 font-medium rounded-full text-2xl cursor-pointer flex items-center gap-2" />
         </>
       ) : type === "Delete" ? (
         <>
