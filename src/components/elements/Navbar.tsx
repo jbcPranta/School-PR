@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
       <div className="mx-auto px-1 md:px-4">
         <div className="relative flex h-16 items-center justify-between">
         
-          <Link to={"/"} className="flex flex-1 items-center justify-start ">
+          <Link to={"/react"} className="flex flex-1 items-center justify-start ">
             <div className="flex gap-4 shrink-0 items-center">
               <img
                 className="h-8 w-auto"

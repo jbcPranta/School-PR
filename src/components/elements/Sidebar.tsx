@@ -22,9 +22,17 @@ const Sidebar: React.FC = () => {
     <div className="h-screen h-100vh w-64 bg-[#32479C] shadow-2xl border-t-2 border-amber-50 flex text-amber-50">
       <nav className="flex-1">
         <ul className="cursor-pointer">
+          {/* Dashboard */}
+          <Link
+            to="/react/dashboard"
+            className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
+          >
+            <FaHeadSideVirus className="text-amber-50 text-2xl" />
+            <div className="p-3 font-bold text-base">DashBoard</div>
+          </Link>
           {/* Admin List */}
           <Link
-            to="/admin-page"
+            to="/react/admin-page"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <FaHeadSideVirus className="text-amber-50 text-2xl" />
@@ -33,7 +41,7 @@ const Sidebar: React.FC = () => {
           {/* Event Management */}
           
           <Link
-            to="/event-list"
+            to="/react/event-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <FaBusSimple className="text-amber-50 text-2xl" />
@@ -42,7 +50,7 @@ const Sidebar: React.FC = () => {
 
           {/* Announcements */}
           <Link
-            to="/announcement-list"
+            to="/react/announcement-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <FaInfoCircle className="text-amber-50 text-2xl" />
@@ -51,7 +59,7 @@ const Sidebar: React.FC = () => {
 
           {/* Income List */}
           <Link
-            to="/income-list"
+            to="/react/income-list"
             className="pl-2.5 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <HiOutlineCurrencyYen className="text-amber-50 text-3xl" />
@@ -60,7 +68,7 @@ const Sidebar: React.FC = () => {
 
           {/* Unpaid List */}
           <Link
-            to="/unpaid-list"
+            to="/react/unpaid-list"
             className="pl-2.5 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <HiOutlineCurrencyYen className="text-amber-50 text-3xl" />
@@ -69,7 +77,7 @@ const Sidebar: React.FC = () => {
 
           {/* Documents List */}
           <Link
-            to="/doc-list"
+            to="/react/doc-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <ImFolderOpen className="text-amber-50 text-2xl" />
@@ -78,7 +86,7 @@ const Sidebar: React.FC = () => {
 
           {/* User List */}
           <Link
-            to="/user-list"
+            to="/react/user-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <FaHeadSideVirus className="text-amber-50 text-2xl" />
@@ -87,7 +95,7 @@ const Sidebar: React.FC = () => {
 
           {/* Student List */}
           <Link
-            to="/student-list"
+            to="/react/student-list"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <RiUserFill className="text-amber-50 text-2xl" />
@@ -111,21 +119,21 @@ const Sidebar: React.FC = () => {
           {/* Dropdown Menu*/}
           <div className={`${dropdown ? "block" : "hidden"} bg-[#32479C]`}>
             <Link
-              to="/club-list"
+              to="/react/club-list"
               className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
             >
               <div className="p-3 font-bold text-base w-[90%]">クラブ管理</div>
               <IoIosArrowForward className="text-amber-50 text-xl mx-0" />
             </Link>
             <Link
-              to="/class-list"
+              to="/react/class-list"
               className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
             >
               <div className="p-3 font-bold text-base w-[90%]">クラス管理</div>
               <IoIosArrowForward className="text-amber-50 text-xl mx-0" />
             </Link>
             <Link
-              to="/expense-item-list"
+              to="/react/expense-item-list"
               className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
             >
               <div className="p-3 font-bold text-base w-[90%]">費目設定</div>
@@ -135,7 +143,7 @@ const Sidebar: React.FC = () => {
 
           {/* Logout */}
           <Link
-            to="/login"
+            to="/react/login"
             className="pl-3 border-b border-amber-50 hover:bg-[#2C3E70] flex items-center"
           >
             <ImExit className="text-amber-50 text-2xl" />

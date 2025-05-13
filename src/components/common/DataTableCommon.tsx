@@ -30,7 +30,7 @@ const DataTableCommon: React.FC<DataTableCommonProps> = ({ tableHead, data, head
     <div className="relative">
       {/* Header section */}
       <div className="pb-4  dark:bg-gray-900 flex justify-between items-center">
-        <Link to={`/create-user`}>
+        <Link to={`/react/create-user`}>
           <button className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-md text-sm py-2.5 px-5 cursor-pointer">
             Create User
           </button>

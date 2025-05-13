@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EventManagement from "./pages/EventManagement";
@@ -19,70 +19,74 @@ import CommonForm from "./components/common/CommonForm";
 import AdminPage from "./pages/AdminPage";
 const router = createBrowserRouter([
   {
+    path: "/",
+    element:<Navigate to="/react" />,
+  },
+  {
     
-    path: "",
+    path: "/react",
     element: <Home />,
     children: [
       {
-        path: "/",
+        path: "/react/dashboard",
         element: <Dashboard />,
       },
       {
-        path: "/event-list",
+        path: "/react/event-list",
         element: <EventManagement />,
       },
       {
-        path: "/admin-page",
+        path: "/react/admin-page",
         element: <AdminPage/>,
       },
       {
-        path: "/announcement-list",
+        path: "/react/announcement-list",
         element: <AnnouncementPage/>,
       },
       {
-        path: "/income-list",
+        path: "/react/income-list",
         element: <IncomeListPage />,
       },
       {
-        path: "/unpaid-list",
+        path: "/react/unpaid-list",
         element: <UnpaidListPage />,
       },
       {
-        path: "/doc-list",
+        path: "/react/doc-list",
         element: <DocumentListPage />,
       },
       {
-        path: "/user-list",
+        path: "/react/user-list",
         element: <UserListPage />,
       },
       {
-        path: "/student-list",
+        path: "/react/student-list",
         element: <StudentList />,
       },
       {
-        path: "/club-list",
+        path: "/react/club-list",
         element: <ClubList />,
       },
       {
-        path: "/class-list",
+        path: "/react/class-list",
         element: <ClassList />,
       },
       {
-        path: "/expense-item-list",
+        path: "/react/expense-item-list",
         element: <ExpenseItemList />,
       },
       {
-        path: "/change-password",
+        path: "/react/change-password",
         element: <ChangePassword />,
       },
       {
-        path: "/create-user",
+        path: "/react/create-user",
         element: <CommonForm />,
       },
     ],
   },
   {
-    path: "/login",
+    path: "/react/login",
     element: <Login />,
   },
 ]);
