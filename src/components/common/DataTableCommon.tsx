@@ -2,26 +2,17 @@ import React, { useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-type StudentData = {
-  student_name: string;
-  student_name_furigana: string;
-  school_year: string;
-  class: string;
-  student_id_number: string;
-  club: string;
-};
-
-type TableHead = {
-  text: string;
-  key: keyof StudentData;
-};
-const DataTableCommon: React.FC<{
-  tableHead: TableHead[];
-  data: StudentData[];
+type DataTableCommonProps = {
+  tableHead: { text: string; key: string }[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
   headerTitle: string;
   Actions: React.ReactNode[];
-}> = ({ tableHead, data, headerTitle, Actions }) => {
+};
+
+const DataTableCommon: React.FC<DataTableCommonProps> = ({ tableHead, data, headerTitle, Actions }) => {
   const [pageNumber, setPageNumber] = useState(0);
+  console.log(data);
   const page = 1; // Adjust the page numbers the way you want
   const updatePageNumber = (num: number) => {
     if (num > page - 1 || 0 > num) {
@@ -87,7 +78,7 @@ const DataTableCommon: React.FC<{
               {tableHead.map((item, index) => (
                 <th
                   key={index}
-                  className="px-6 py-3 text-gray-700 dark:text-gray-400 font-bold"
+                  className="px-6 py-3 text-gray-700 dark:text-gray-400 font-bold text-center"
                 >
                   {item.text}
                 </th>
@@ -102,14 +93,14 @@ const DataTableCommon: React.FC<{
             {data.map((item, index) => (
               <tr
                 key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                className="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 {tableHead.map((head, index) => (
                   <td
                     key={index}
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item[head.key as keyof StudentData]}
+                    {item[head.key as keyof typeof item] as string}
                   </td>
                 ))}
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 justify-around">

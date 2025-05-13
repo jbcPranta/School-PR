@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({ url, label, type }) => {
         </>
       ) : type === "Info" ? (
         <>
-          <FaCircleInfo className="text-green-600  hover:text-yellow-300 font-medium rounded-full text-2xl cursor-pointer flex items-center gap-2" />
+          <FaCircleInfo className="text-green-600  hover:text-green-300 font-medium rounded-full text-2xl cursor-pointer flex items-center gap-2" />
         </>
       ) : null}
     </Link>
