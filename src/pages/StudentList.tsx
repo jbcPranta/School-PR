@@ -68,6 +68,7 @@ const StudentList: React.FC = () => {
         tableHead={tableHead}
         data={studentData}
         headerTitle={headerTitle}
+        createPage="/react/create-student"
         Actions={buttons}
       />
     </div>

@@ -61,6 +61,7 @@ const AdminPage: React.FC = () => {
       <DataTableCommon
         tableHead={tableHead}
         data={AdminData}
+        createPage="/react/create-admin"
         headerTitle={headerTitle}
         Actions={buttons}
       />

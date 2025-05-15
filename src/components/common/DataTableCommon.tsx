@@ -8,10 +8,17 @@ type DataTableCommonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   headerTitle: string;
+  createPage: string;
   Actions: React.ReactNode[];
 };
 
-const DataTableCommon: React.FC<DataTableCommonProps> = ({ tableHead, data, headerTitle, Actions }) => {
+const DataTableCommon: React.FC<DataTableCommonProps> = ({
+  tableHead,
+  data,
+  headerTitle,
+  Actions,
+  createPage,
+}) => {
   const [pageNumber, setPageNumber] = useState(0);
   console.log(data);
   const page = 1; // Adjust the page numbers the way you want
@@ -30,7 +37,7 @@ const DataTableCommon: React.FC<DataTableCommonProps> = ({ tableHead, data, head
     <div className="relative">
       {/* Header section */}
       <div className="pb-4  dark:bg-gray-900 flex justify-between items-center">
-        <Link to={`/react/create-user`}>
+        <Link to={`${createPage}`} className="flex gap-2">
           <button className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-md text-sm py-2.5 px-5 cursor-pointer">
             Create User
           </button>
