@@ -11,7 +11,8 @@ interface AdminData {
 }
 
 const AdminPage: React.FC = () => {
-  const AdminData: AdminData[] = [
+  
+  const adminData: AdminData[] = [
     {
       name: "Taro Yamada",
       name_furigana: "やまだ たろう",
@@ -60,9 +61,12 @@ const AdminPage: React.FC = () => {
     <div>
       <DataTableCommon
         tableHead={tableHead}
-        data={AdminData}
-        createPage="/react/create-admin"
+        data={adminData}
         headerTitle={headerTitle}
+        pageLink={{
+          url: "/create-admin",
+          label: "Create Admin",
+        }}
         Actions={buttons}
       />
     </div>

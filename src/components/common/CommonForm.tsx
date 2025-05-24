@@ -1,23 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
-type FieldConfig = {
-  name: string;
-  label: string;
-  type: string;
-  placeholder?: string;
-  validation?: object;
-};
+import { FormField } from "../../models/models";
 
 type CommonFormProps = {
   title: string;
-  fields: FieldConfig[];
+  fields: FormField[];
+  btnText: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (data: any) => void;
 };
 
-const CommonForm: React.FC<CommonFormProps> = ({ title, fields, onSubmit }) => {
+const CommonForm: React.FC<CommonFormProps> = ({ title, fields,btnText, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -69,7 +63,7 @@ const CommonForm: React.FC<CommonFormProps> = ({ title, fields, onSubmit }) => {
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md"
         >
-          Save
+          {btnText}
         </button>
       </div>
     </form>

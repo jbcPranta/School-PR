@@ -1,60 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DataTableCommon from "../components/common/DataTableCommon";
 import Button from "../components/Button";
-
-interface StudentData {
-  student_name: string;
-  student_name_furigana: string;
-  school_year: string;
-  class: string;
-  student_id_number: string;
-  club: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "../axios/axiosInstance";
+import Loading from "./Loading";
+import { StudentData } from "../models/models";
 
 const StudentList: React.FC = () => {
-  const studentData: StudentData[] = [
-    {
-      student_name: "Yuki Tanaka",
-      student_name_furigana: "たなか ゆき",
-      school_year: "2nd Year",
-      class: "B",
-      student_id_number: "20230501",
-      club: "Basketball",
-    },
-    {
-      student_name: "Haruto Sato",
-      student_name_furigana: "さとう はると",
-      school_year: "1st Year",
-      class: "A",
-      student_id_number: "20240115",
-      club: "Art",
-    },
-    {
-      student_name: "Mio Suzuki",
-      student_name_furigana: "すずき みお",
-      school_year: "3rd Year",
-      class: "C",
-      student_id_number: "20220718",
-      club: "Science",
-    },
-    {
-      student_name: "Kenta Nakamura",
-      student_name_furigana: "なかむら けんた",
-      school_year: "2nd Year",
-      class: "D",
-      student_id_number: "20230823",
-      club: "Music",
-    },
-  ];
+  const token = localStorage.getItem("token");
   const headerTitle = "Student List";
   const tableHead: { text: string; key: keyof StudentData }[] = [
-    { text: "Student Name", key: "student_name" },
-    { text: "Furigana Name", key: "student_name_furigana" },
-    { text: "School Year", key: "school_year" },
-    { text: "Class", key: "class" },
-    { text: "Student ID Number", key: "student_id_number" },
-    { text: "Club", key: "club" },
+    { text: "#", key: "id" },
+    { text: "Name", key: "name" },
+    { text: "Furigana Name", key: "name_furigana" },
+    { text: "Email", key: "email" },
+    { text: "Phone", key: "phone" },
+    // { text: "Avatar", key: "avatar" }, // Optional
   ];
+
+  const { data: studentData = [], isLoading, isError } = useQuery<StudentData[]>({
+    queryKey: ["studentData"],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    },
+    enabled: !!token, 
+  });
+
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    if (isLoading) {
+      setShowLoading(true);
+      const timer = setTimeout(() => setShowLoading(false), 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoading(false);
+    }
+  }, [isLoading]);
 
   const buttons = [
     <Button url="/create-user" label="View Details" type="View" />,
@@ -62,13 +49,23 @@ const StudentList: React.FC = () => {
     <Button url="/delete" label="Delete" type="Delete" />,
   ];
 
+  if (showLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
+
   return (
-    <div>
+    <div className="relative">
       <DataTableCommon
         tableHead={tableHead}
-        data={studentData}
+        data={studentData ?? []}
         headerTitle={headerTitle}
-        createPage="/react/create-student"
+        pageLink={{
+          url: "/create-student",
+          label: "Create Student",
+        }}
         Actions={buttons}
       />
     </div>

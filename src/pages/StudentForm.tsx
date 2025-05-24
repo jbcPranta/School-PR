@@ -43,6 +43,7 @@ const StudentForm: React.FC = () => {
   return (
     <CommonForm
       title="Create Student"
+      btnText="Register Student"
       fields={studentFields}
       onSubmit={handleSubmit}
     />

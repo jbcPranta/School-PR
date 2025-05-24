@@ -3,22 +3,22 @@ import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 
-type DataTableCommonProps = {
+type DataTableCommonProps<T extends object
+> = {
   tableHead: { text: string; key: string }[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any[];
+  data: T[];
   headerTitle: string;
-  createPage: string;
+  pageLink: { url: string; label: string };
   Actions: React.ReactNode[];
 };
 
-const DataTableCommon: React.FC<DataTableCommonProps> = ({
+const DataTableCommon = <T extends object>({
   tableHead,
   data,
   headerTitle,
   Actions,
-  createPage,
-}) => {
+  pageLink
+}: DataTableCommonProps<T>): React.ReactElement => {
   const [pageNumber, setPageNumber] = useState(0);
   console.log(data);
   const page = 1; // Adjust the page numbers the way you want
@@ -32,14 +32,15 @@ const DataTableCommon: React.FC<DataTableCommonProps> = ({
   const handleDropdown = () => {
     setDropdown((prev) => !prev);
   };
+  console.log(tableHead)
 
   return (
     <div className="relative">
       {/* Header section */}
       <div className="pb-4  dark:bg-gray-900 flex justify-between items-center">
-        <Link to={`${createPage}`} className="flex gap-2">
+        <Link to={`${pageLink.url}`} className="flex gap-2">
           <button className="text-white bg-green-600 hover:bg-green-700 font-medium rounded-md text-sm py-2.5 px-5 cursor-pointer">
-            Create User
+            {pageLink.label}
           </button>
         </Link>
         <h2 className="uppercase text-2xl font-bold">{headerTitle}</h2>
@@ -89,12 +90,14 @@ const DataTableCommon: React.FC<DataTableCommonProps> = ({
                 key={index}
                 className="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                {tableHead.map((head, index) => (
+                {tableHead.map((head, headIndex) => (
                   <td
-                    key={index}
+                    key={headIndex}
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item[head.key as keyof typeof item] as string}
+                    {head.key === "id"
+                      ? index + 1 // Show row number instead of item.id
+                      : (item[head.key as keyof typeof item] as string)}
                   </td>
                 ))}
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 justify-around">

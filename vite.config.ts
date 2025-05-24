@@ -15,4 +15,8 @@ export default defineConfig({
       "react-toastify": "react-toastify/dist/react-toastify.esm.js",
     },
   },
+  server: {
+    host: "localhost",
+    port: 3000,
+  },
 });
