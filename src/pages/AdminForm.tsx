@@ -2,8 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import CommonForm from "../components/common/CommonForm";
 
-
-const AdminForm: React.FC= () => {
+const AdminForm: React.FC = () => {
   const adminFields = [
     {
       name: "role",
@@ -42,7 +41,12 @@ const AdminForm: React.FC= () => {
   };
 
   return (
-    <CommonForm title="Create Admin" fields={adminFields} onSubmit={handleSubmit} />
+    <CommonForm
+      title="Create Admin"
+      btnText= "Register Admin"
+      fields={adminFields}
+      onSubmit={handleSubmit}
+    />
   );
 };
 
